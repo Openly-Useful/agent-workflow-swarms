@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "id": "openly-useful",
+  "displayName": "Openly Useful",
+  "authorityManifest": "https://openlyuseful.org/publisher/manifest.json",
+  "legal": {
+    "plannedName": "Openly Useful LLC",
+    "activeName": null,
+    "status": "formation-pending",
+    "currentOperator": {
+      "type": "founder-individual",
+      "displayName": "Founder of Openly Useful",
+      "operatingAs": "Openly Useful"
+    },
+    "plannedRoles": [
+      "publisher",
+      "operator",
+      "licensee"
+    ]
+  },
+  "domains": {
+    "studio": "https://openlyuseful.com",
+    "openSource": "https://openlyuseful.org",
+    "publicAuthority": "openlyuseful.org"
+  },
+  "organization": {
+    "github": "https://github.com/Openly-Useful"
+  },
+  "namespaces": {
+    "npm": "@openly-useful",
+    "openSourceMcp": "org.openlyuseful",
+    "reservedStudioMcp": "com.openlyuseful"
+  },
+  "contacts": {
+    "public": "hello@openlyuseful.org",
+    "routing": "Use the email subject to route publishing, security, legal, and support requests."
+  },
+  "policies": {
+    "privacy": "https://openlyuseful.org/legal/privacy",
+    "terms": "https://openlyuseful.org/legal/terms",
+    "security": "https://openlyuseful.org/security",
+    "support": "https://openlyuseful.org/support"
+  },
+  "policyMirrors": {
+    "privacy": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/legal/privacy.html",
+    "terms": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/legal/terms.html",
+    "security": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/security.html",
+    "support": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/support.html"
+  },
+  "authorityManifestMirror": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/publisher/manifest.json",
+  "publication": {
+    "localGenerationAllowed": true,
+    "localTestingAllowed": true,
+    "externalPublicationAllowed": true,
+    "authorization": "granted",
+    "authorizationBasis": "founder-owner-direct",
+    "effectiveWhileFormationPending": true,
+    "blockingRequirements": [
+      "namespace-verification",
+      "provider-account-authentication",
+      "provider-review"
+    ]
+  },
+  "artifactPolicy": {
+    "authorityEndpoint": "This manifest is the published authority endpoint for Openly Useful publisher and marketplace verification. It is projected from the governed editable publisher source.",
+    "derivation": "Provider-specific skills, MCP manifests, packages, and marketplace listings must derive publisher identity, domains, policy URLs, contacts, and namespaces from this published authority endpoint.",
+    "activation": "Openly Useful is founder-operated while Openly Useful LLC formation is pending. External source and registry publication is authorized by the founder-owner. The planned LLC must not be represented as formed, active, or the operator until formation is accepted; later LLC operation does not require a transfer of RunGlance ownership."
+  },
+  "lastUpdated": "2026-08-23",
+  "component": {
+    "name": "conductor-swarm",
+    "displayName": "Conductor Swarm",
+    "version": "1.2.0",
+    "repository": "https://github.com/Openly-Useful/agent-workflow-swarms",
+    "license": "MIT",
+    "skillsPath": "./skills/",
+    "skillNames": [
+      "conductor-swarm",
+      "cross-tool-continuity-swarm",
+      "pickup-swarm"
+    ],
+    "mcp": false
+  }
+}
