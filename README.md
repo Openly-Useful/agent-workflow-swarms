@@ -81,7 +81,7 @@ https://github.com/Openly-Useful/agent-workflow-swarms/tree/main/skills
 
 The repository is also a root-level, skill-only plugin for both OpenAI/Codex and Claude. `.codex-plugin/plugin.json` and `.claude-plugin/plugin.json` both point to the same canonical `./skills/` directory; no wrapper copies of `SKILL.md` are generated. Repository-local catalogs live at `.agents/plugins/marketplace.json` and `.claude-plugin/marketplace.json`, with the repository root as their plugin source.
 
-These files prepare local discovery only. They do not install or publish the plugin, and they declare no MCP server or app. `publisher/publisher.json` derives the Openly Useful publisher identity and policy URLs from <https://openlyuseful.org/publisher/manifest.json>, the published authority endpoint. Each live policy page and the authority manifest itself has a version-controlled 1:1 source in the [openlyuseful.org site repository](https://github.com/Openly-Useful/openlyuseful.org), declared through `policyMirrors` and `authorityManifestMirror`; this repository's `PRIVACY.md`, `TERMS.md`, `SECURITY.md`, and `SUPPORT.md` remain the component-level policies for the skills package. Openly Useful LLC remains a planned, formation-pending publisher/operator/licensee, and external publication authorization remains withheld.
+These files prepare local discovery only. They do not install or publish the plugin, and they declare no MCP server or app. `publisher/publisher.json` derives the Openly Useful publisher identity and policy URLs from <https://openlyuseful.org/publisher/manifest.json>, the published authority endpoint. Each live policy page and the authority manifest itself has a version-controlled 1:1 source in the [openlyuseful.org site repository](https://github.com/Openly-Useful/openlyuseful.org), declared through `policyMirrors` and `authorityManifestMirror`; this repository's `PRIVACY.md`, `TERMS.md`, `SECURITY.md`, and `SUPPORT.md` remain the component-level policies for the skills package. Openly Useful is founder-operated while Openly Useful LLC formation is pending. External source and registry publication is authorized by the founder-owner and effective during formation; the remaining gates are namespace verification, provider account authentication, and provider review. The planned LLC is not represented as formed, active, or the current operator, and later LLC operation does not require a transfer of RunGlance ownership.
 
 ## Use
 
@@ -119,7 +119,7 @@ identify safe optimizations, and prepare clean continuation briefs.
 
 See the tested [compatibility matrix](COMPATIBILITY.md), the repeatable behavioral contracts in [`evals/cases.yaml`](evals/cases.yaml), and the deterministic continuity CLI under `skills/cross-tool-continuity-swarm/scripts/continuity.py`.
 
-Validate canonical skill uniqueness, provider manifests, marketplace entries, publisher metadata, and formation-pending publication state with:
+Validate canonical skill uniqueness, provider manifests, marketplace entries, publisher metadata, and the founder-authorized formation-pending publication state with:
 
 ```sh
 python3 scripts/validate.py

@@ -102,21 +102,74 @@ def read_json(relative_path: str) -> dict[str, object]:
 
 def validate_registration() -> None:
     publisher = read_json("publisher/publisher.json")
-    if publisher.get("schemaVersion") != 1 or publisher.get("authorityManifest") != "https://openlyuseful.org/publisher/manifest.json":
-        raise AssertionError("publisher authority contract mismatch")
-    identity = publisher.get("publisher")
-    if identity != {
+    expected_authority = {
+        "schemaVersion": 1,
+        "id": "openly-useful",
         "displayName": "Openly Useful",
-        "homepage": "https://openlyuseful.org",
-        "studio": "https://openlyuseful.com",
-        "publicContact": "hello@openlyuseful.org",
-    }:
-        raise AssertionError("publisher identity mismatch")
-    legal = publisher.get("plannedLegalEntity")
-    if not isinstance(legal, dict) or legal.get("name") != "Openly Useful LLC" or legal.get("status") != "formation-pending":
-        raise AssertionError("planned entity must remain formation-pending")
-    if sorted(legal.get("roles", [])) != ["licensee", "operator", "publisher"]:
-        raise AssertionError("planned entity roles mismatch")
+        "authorityManifest": "https://openlyuseful.org/publisher/manifest.json",
+        "legal": {
+            "plannedName": "Openly Useful LLC",
+            "activeName": None,
+            "status": "formation-pending",
+            "currentOperator": {
+                "type": "founder-individual",
+                "displayName": "Founder of Openly Useful",
+                "operatingAs": "Openly Useful",
+            },
+            "plannedRoles": ["publisher", "operator", "licensee"],
+        },
+        "domains": {
+            "studio": "https://openlyuseful.com",
+            "openSource": "https://openlyuseful.org",
+            "publicAuthority": "openlyuseful.org",
+        },
+        "organization": {"github": "https://github.com/Openly-Useful"},
+        "namespaces": {
+            "npm": "@openly-useful",
+            "openSourceMcp": "org.openlyuseful",
+            "reservedStudioMcp": "com.openlyuseful",
+        },
+        "contacts": {
+            "public": "hello@openlyuseful.org",
+            "routing": "Use the email subject to route publishing, security, legal, and support requests.",
+        },
+        "policies": {
+            "privacy": "https://openlyuseful.org/legal/privacy",
+            "terms": "https://openlyuseful.org/legal/terms",
+            "security": "https://openlyuseful.org/security",
+            "support": "https://openlyuseful.org/support",
+        },
+        "policyMirrors": {
+            "privacy": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/legal/privacy.html",
+            "terms": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/legal/terms.html",
+            "security": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/security.html",
+            "support": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/support.html",
+        },
+        "authorityManifestMirror": "https://github.com/Openly-Useful/openlyuseful.org/blob/main/publisher/manifest.json",
+        "publication": {
+            "localGenerationAllowed": True,
+            "localTestingAllowed": True,
+            "externalPublicationAllowed": True,
+            "authorization": "granted",
+            "authorizationBasis": "founder-owner-direct",
+            "effectiveWhileFormationPending": True,
+            "blockingRequirements": [
+                "namespace-verification",
+                "provider-account-authentication",
+                "provider-review",
+            ],
+        },
+        "artifactPolicy": {
+            "authorityEndpoint": "This manifest is the published authority endpoint for Openly Useful publisher and marketplace verification. It is projected from the governed editable publisher source.",
+            "derivation": "Provider-specific skills, MCP manifests, packages, and marketplace listings must derive publisher identity, domains, policy URLs, contacts, and namespaces from this published authority endpoint.",
+            "activation": "Openly Useful is founder-operated while Openly Useful LLC formation is pending. External source and registry publication is authorized by the founder-owner. The planned LLC must not be represented as formed, active, or the operator until formation is accepted; later LLC operation does not require a transfer of RunGlance ownership.",
+        },
+        "lastUpdated": "2026-08-23",
+    }
+    authority = dict(publisher)
+    authority.pop("component", None)
+    if authority != expected_authority:
+        raise AssertionError("publisher record must exactly mirror the live founder-authorized authority manifest")
     component = publisher.get("component")
     if not isinstance(component, dict):
         raise AssertionError("publisher component metadata is required")
@@ -127,10 +180,6 @@ def validate_registration() -> None:
         raise AssertionError("component skill inventory mismatch")
     if component.get("mcp") is not False:
         raise AssertionError("skill-only component must explicitly remain MCP-free")
-    publication = publisher.get("externalPublication")
-    if publication != {"allowed": False, "authorization": "withheld"}:
-        raise AssertionError("external publication must remain withheld")
-
     site_blob = "https://github.com/Openly-Useful/openlyuseful.org/blob/main/"
     policies = publisher.get("policies", {})
     mirrors = publisher.get("policyMirrors")
@@ -147,7 +196,11 @@ def validate_registration() -> None:
     if publisher.get("authorityManifestMirror") != site_blob + "publisher/manifest.json":
         raise AssertionError("authority manifest mirror must reference the version-controlled site repository source")
 
-    author = {"name": identity["displayName"], "email": identity["publicContact"], "url": identity["homepage"]}
+    author = {
+        "name": publisher["displayName"],
+        "email": publisher["contacts"]["public"],
+        "url": publisher["domains"]["openSource"],
+    }
     common = {
         "name": component["name"],
         "version": component["version"],
@@ -167,7 +220,7 @@ def validate_registration() -> None:
             raise AssertionError(f"{label} skill-only plugin cannot declare MCP or apps")
     if codex.get("interface", {}).get("displayName") != component.get("displayName"):
         raise AssertionError("Codex plugin display name mismatch")
-    if codex.get("interface", {}).get("developerName") != identity["displayName"]:
+    if codex.get("interface", {}).get("developerName") != publisher["displayName"]:
         raise AssertionError("Codex developer name mismatch")
     if codex.get("interface", {}).get("privacyPolicyURL") != policies.get("privacy"):
         raise AssertionError("Codex privacy URL mismatch")
@@ -175,7 +228,7 @@ def validate_registration() -> None:
         raise AssertionError("Codex terms URL mismatch")
 
     codex_marketplace = read_json(".agents/plugins/marketplace.json")
-    if codex_marketplace.get("interface") != {"displayName": identity["displayName"]}:
+    if codex_marketplace.get("interface") != {"displayName": publisher["displayName"]}:
         raise AssertionError("Codex marketplace publisher mismatch")
     codex_entries = codex_marketplace.get("plugins")
     if not isinstance(codex_entries, list) or len(codex_entries) != 1:
