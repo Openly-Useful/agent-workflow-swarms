@@ -1,12 +1,22 @@
 # Agent Workflow Swarms
 
-**Discover. Route. Finish.**
+**Observe. Parallelize. Verify. Adapt. Finish.**
 
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-3B4CCA)](https://agentskills.io)
 [![skills.sh](https://skills.sh/b/Openly-Useful/agent-workflow-swarms)](https://skills.sh/Openly-Useful/agent-workflow-swarms)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0B7285.svg)](LICENSE)
 
-Agent Workflow Swarms is a model-agnostic collection for recovering, orchestrating, and transferring complex agent work. Its Conductor Swarm inventories the models, skills, tools, connectors, and agents that the current runtime actually exposes; activates only the capabilities the current phase needs; and keeps work moving until every in-scope acceptance criterion has current verification evidence.
+Agent Workflow Swarms is a model-agnostic delivery loop for recovering, orchestrating, and transferring complex agent work. Conductor reuses the current runtime's capability catalog and verified checkpoints, activates only useful capabilities, and keeps ready independent work moving through integrated acceptance milestones.
+
+## Shared delivery loop
+
+Observe changes → shape coherent work → execute ready independent lanes in parallel → verify and integrate milestones → adapt → continue required authorized follow-ons or finish. See the [canonical loop contract](skills/conductor-swarm/references/delivery-loop.md).
+
+The loop is a framework, not six mandatory agents or a serialized sequence of whole-project gates. Respect actual dependencies and shared-artifact collisions; one integration owner is not a project-wide single writer. Keep independent work moving while a blocked lane is resolved. Repeated revisions without new evidence require a change of approach, not another identical review cycle.
+
+Pickup supplies a bounded recovery receipt only when needed; Continuity handles actual tool/session transfer. Neither recursively relaunches Conductor. Use [StatusGlance](https://github.com/Openly-Useful/project-status) for one bounded read-only activity/readiness view, Operations Pulse for explicitly requested recurring work, and Skill Feedback Engine for opt-in improvement proposals. Status requests do not start execution or schedule polling.
+
+Stop when the agreed objective is accepted or a genuine authority/decision boundary is reached. Do not leave required ready follow-ons idle, silently broaden scope, or introduce blanket scheduling rules. Model choices and agent availability remain host-specific.
 
 Learn more at [Openly Useful](https://openlyuseful.org/#projects).
 
@@ -18,7 +28,7 @@ It is quality-first, not “cheapest-model-first.” Token and latency savings c
 
 The parent orchestration skill:
 
-- reviews every exposed skill name and description, records absent fields as unknown, and progressively inspects plausible or ambiguous candidates;
+- reuses the exposed skill catalog, records absent fields as unknown, and progressively inspects relevant selected or ambiguous candidates;
 - maps runtime-exposed model choices into neutral capability profiles;
 - selects the smallest sufficient skill set for each phase;
 - routes models by quality floor, consequence, ambiguity, context, and verification strength;
@@ -41,7 +51,7 @@ The portable continuity component used when work crosses tools or sessions:
 
 - keeps a deterministic, provider-neutral checkpoint with verified evidence and explicit audit, prepare, sync, switch, review, and resume contracts;
 - enforces a 32 KiB transferable-context cap, rejects common local-only values, and makes evidence and synchronization idempotent;
-- renders a bounded text-block launch prompt for the receiving tool and composes with Pickup Swarm before Conductor Swarm routing.
+- renders a bounded text-block launch prompt and consumes an existing recovery receipt; it does not recursively run Pickup then Conductor on every invocation.
 
 ## Model-agnostic by design
 
@@ -117,7 +127,7 @@ identify safe optimizations, and prepare clean continuation briefs.
 - repository-local Codex and Claude marketplace catalogs
 - skills.sh-compatible repository layout
 
-See the tested [compatibility matrix](COMPATIBILITY.md), the repeatable behavioral contracts in [`evals/cases.yaml`](evals/cases.yaml), and the deterministic continuity CLI under `skills/cross-tool-continuity-swarm/scripts/continuity.py`.
+See the tested [compatibility matrix](COMPATIBILITY.md), static instruction contract checks in [`evals/cases.yaml`](evals/cases.yaml), and the deterministic continuity CLI under `skills/cross-tool-continuity-swarm/scripts/continuity.py`. Static phrase checks are not agent behavioral trials; report those separately when actually run.
 
 Validate canonical skill uniqueness, provider manifests, marketplace entries, publisher metadata, and the founder-authorized formation-pending publication state with:
 

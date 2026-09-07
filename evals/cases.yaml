@@ -24,8 +24,8 @@ cases:
     prompt: Skill descriptions overlap and dependency metadata is absent.
     requires:
       - "Mark absent fields `unknown`"
-      - "read those bodies completely, one at a time"
-      - "Exclude an ambiguous candidate only after inspection"
+      - "Read selected bodies completely"
+      - "relevant ambiguous candidates"
     forbids:
       - "Guess missing dependencies"
 
@@ -63,7 +63,7 @@ cases:
     skill: conductor-swarm
     prompt: Proposed parallel agents would edit the same coupled files.
     requires:
-      - "Use one owner for coupled files"
+      - "Scope ownership to coupled artifacts"
       - "non-overlapping ownership"
       - "Name the integrator and dependency order"
     forbids:
@@ -74,8 +74,8 @@ cases:
     prompt: An optimization may improve speed but change public behavior.
     requires:
       - "Preserve public behavior"
-      - "Make the smallest reversible change"
-      - "Revert or stop if behavior regresses"
+      - "Make a small reversible change"
+      - "never revert existing user or concurrent changes"
     forbids:
       - "silently expanding scope"
 
@@ -93,8 +93,8 @@ cases:
     skill: cross-tool-continuity-swarm
     prompt: Resume a project that is moving from one coding tool to another.
     requires:
-      - "Pickup Swarm first"
-      - "Conductor Swarm"
+      - "Consume a valid recovery receipt"
+      - "do not recursively start another coordinator"
       - "audit"
       - "prepare"
       - "sync"
@@ -130,7 +130,7 @@ cases:
     skill: cross-tool-continuity-swarm
     prompt: Prepare this current chat as one command I can run to continue in an existing Claude Code session.
     requires:
-      - "Pickup then Conductor"
+      - "without restarting an active Conductor"
       - "current source thread identifier was captured and read back"
       - "recover"
       - "at least one acceptance criterion"
@@ -151,7 +151,7 @@ cases:
       - "supported host lifecycle interface"
       - "protected local lineage store"
       - "read it back and verify"
-      - "Repeated invocations must upsert the same link rather than duplicate it"
+      - "Repeated captures must upsert the same link rather than duplicate it"
       - "must never contain the raw identifier"
     forbids:
       - "put the session ID in .continuity"

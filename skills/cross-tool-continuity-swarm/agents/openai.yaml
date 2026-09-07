@@ -1,4 +1,4 @@
 interface:
   display_name: "Cross-Tool Continuity Swarm"
   short_description: "Capture lineage and launch work across tools"
-  default_prompt: "Use $cross-tool-continuity-swarm to capture this task’s local session lineage and prepare a verified one-command Claude Code handoff."
+  default_prompt: "Use $cross-tool-continuity-swarm for the requested tool or session transfer, reusing valid recovery evidence and preserving verified lineage without restarting nested orchestrators."
