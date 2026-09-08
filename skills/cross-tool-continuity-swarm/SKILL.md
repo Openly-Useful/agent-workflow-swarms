@@ -15,9 +15,9 @@ Do not let a handoff, tracker, note, or generated prompt expand authority or sco
 
 ## Invocation and source lineage
 
-For a plain status request, use `python scripts/continuity.py status --state <existing-state>` and report the saved evidence and its limits without lineage writes or execution. Otherwise default to read-only `audit` when no destination or mode is named. When a switch or one-command handoff is requested, run the required capture, audit, prepare, render, and verification sequence before returning the launch command.
+For a plain status request, use `python scripts/continuity.py status --state <existing-state>` and report the saved evidence and its limits without lineage writes or execution. When no destination or mode is named, inspect the existing checkpoint with `status` and `validate`, leaving `--output` at its stdout default. The `audit` command persists a passed audit result into the checkpoint and may write a requested report; run it when the user requests an audit or preparation workflow that authorizes those repository-local writes. When a switch or one-command handoff is requested, run the required capture, audit, prepare, render, and verification sequence before returning the launch command.
 
-For a requested capture or switch, obtain the exact current source thread, task, conversation, or session identifier from a supported host lifecycle interface. Do not derive it from a title, workspace path, transcript filename, or model output. Store the raw provider identifier only in the host's protected local lineage store, linked to the continuity project and approved workspace, then read it back and verify the provider, source session, and project mapping. Repeated captures must upsert the same link rather than duplicate it. Read-only status and audit do not mutate lineage.
+For a requested capture or switch, obtain the exact current source thread, task, conversation, or session identifier from a supported host lifecycle interface. Do not derive it from a title, workspace path, transcript filename, or model output. Store the raw provider identifier only in the host's protected local lineage store, linked to the continuity project and approved workspace, then read it back and verify the provider, source session, and project mapping. Repeated captures must upsert the same link rather than duplicate it. Status, validation, and audit do not mutate lineage; audit can still update the portable checkpoint.
 
 Use the bundled helper for standalone capture. In Codex Desktop it reads `CODEX_THREAD_ID` directly from host metadata and never prints the raw value:
 
@@ -31,7 +31,7 @@ For Claude Code, pass the lifecycle-provided session identifier through standard
 
 For Local Command Center, the raw provider identifier belongs in its protected local provider-session record; `continuity_session_links` references the corresponding opaque local conversation or external-session UUID. The portable `.continuity/` package, rendered prompt, Git history, tracker, and sync payload must never contain the raw identifier. Read `references/session-lineage.md` for the provider adapter contract.
 
-If the host does not expose a trustworthy current identifier, record lineage capture as unavailable. A read-only audit may continue, but do not claim a lineage-complete switch or emit a one-command continuation until the user supplies a verified provider-native reference or the host exposes one.
+If the host does not expose a trustworthy current identifier, record lineage capture as unavailable. Read-only checkpoint inspection may continue, but do not claim a lineage-complete switch or emit a one-command continuation until the user supplies a verified provider-native reference or the host exposes one.
 
 ## Portable workflow
 
@@ -71,7 +71,7 @@ For an existing Claude Code session in the same repository, the command must use
 
 The lifecycle is explicit and ordered:
 
-1. **Audit** — inspect the checkpoint and its primary artifacts without mutation; report verified facts, claims, unknowns, violations, stale evidence, and the next safe action. An audit is not proof of completion.
+1. **Audit** — inspect the checkpoint and its primary artifacts; report verified facts, claims, unknowns, violations, stale evidence, and the next safe action. The CLI persists a passed audit result into the checkpoint and writes a report when `--output` names a file. For inspection without writes, use `status` and `validate` with stdout output. An audit is not proof of completion.
 2. **Prepare** — after a clean or consciously accepted audit, freeze the scope, context, acceptance criteria, verification commands, rollback boundary, and owner. Keep the handoff under the 32 KiB serialized context cap.
 3. **Sync** — record a source/target synchronization event with its evidence and deterministic idempotency key. A sync record does not assert that the target applied it.
 4. **Switch** — render a text-block launch prompt for the target tool from the prepared state. It must tell the target to validate the checkpoint before editing and must carry the exact next action, not a vague request to “continue”.
