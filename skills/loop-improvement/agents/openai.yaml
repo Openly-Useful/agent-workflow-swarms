@@ -1,0 +1,4 @@
+interface:
+  display_name: "Loop Improvement"
+  short_description: "Evaluate and reuse evidence-backed lessons"
+  default_prompt: "Use $loop-improvement to evaluate the requested project improvement, preserve milestone evidence, and retrieve only current accepted lessons."

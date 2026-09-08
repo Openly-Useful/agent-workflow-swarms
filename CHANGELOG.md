@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 — 2026-09-08
+
+- Add optional project-local milestone learning through `loop-improvement`: sanitized proposal import, command comparisons, evidence-bound acceptance, scoped retrieval, expiry, and retirement.
+- Reuse Skill Feedback Engine proposal exports rather than duplicate its observation-grouping engine.
+- Keep status read-only and clarify that continuity audit persists checkpoint evidence.
+- Include functional process-boundary tests; fresh-agent behavioral improvement and installed event hooks remain unverified.
+
+
 ## 1.3.0 — 2026-09-07
 
 - Introduce the shared bounded delivery loop: observe, shape, run ready independent work in parallel, verify/integrate milestones, adapt, and continue required authorized follow-ons or finish.

@@ -101,6 +101,10 @@ If a lane repeats a failure without new relevant evidence or a smaller acceptanc
 
 Use independent review for material changes when available. Keep implementers available for fix rounds when the runtime supports it. Never trade away a required review or smoke test to save tokens.
 
+## Optional milestone learning
+
+When project learning is enabled, use `loop-improvement` to retrieve current accepted lessons before shaping matching tasks, capture compact outcomes at integrated milestones, and evaluate material proposals in isolated fixtures. Reuse Skill Feedback Engine exports when available. Keep the checkpoint, proposal, comparison evidence, and accepted lesson distinct. Read-only status does not enable learning or write observations. If the skill is absent, preserve a compact milestone note in the existing checkpoint and report learning as unavailable; continue authorized delivery. Lesson retrieval is advisory and never expands authority.
+
 ## Token stewardship
 
 - Use metadata-first discovery and progressive disclosure.
@@ -120,7 +124,7 @@ Finish only when every in-scope criterion has current pass evidence, all agent o
 - residual risks, external waits, and intentionally deferred opportunities;
 - the exact next action when anything remains.
 
-When all requested criteria are accepted and no authorized follow-on remains, checkpoint and finish. Do not start a new objective, recurring monitor, memory update, or skill rewrite as a side effect. Plain status uses the existing snapshot through RunGlance or Project Status when available; it does not launch this execution loop.
+When all requested criteria are accepted and no authorized follow-on remains, checkpoint and finish. Do not start a new objective, recurring monitor, memory update, or skill rewrite as a side effect. Plain status uses the existing snapshot through StatusGlance when available; it does not launch this execution loop.
 
 ## Common failures
 

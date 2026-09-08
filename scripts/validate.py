@@ -175,7 +175,7 @@ def validate_registration() -> None:
         raise AssertionError("publisher component metadata is required")
     if component.get("name") != "conductor-swarm" or not SEMVER_RE.fullmatch(str(component.get("version", ""))):
         raise AssertionError("component identity/version mismatch")
-    expected_skills = ["conductor-swarm", "cross-tool-continuity-swarm", "pickup-swarm"]
+    expected_skills = ["conductor-swarm", "cross-tool-continuity-swarm", "loop-improvement", "pickup-swarm"]
     if sorted(component.get("skillNames", [])) != expected_skills:
         raise AssertionError("component skill inventory mismatch")
     if component.get("mcp") is not False:
@@ -258,16 +258,16 @@ def validate_registration() -> None:
 
 def main() -> None:
     skills = sorted((ROOT / "skills").glob("*/SKILL.md"))
-    if [path.parent.name for path in skills] != ["conductor-swarm", "cross-tool-continuity-swarm", "pickup-swarm"]:
-        raise AssertionError("expected conductor-swarm, cross-tool-continuity-swarm, and pickup-swarm skills")
+    if [path.parent.name for path in skills] != ["conductor-swarm", "cross-tool-continuity-swarm", "loop-improvement", "pickup-swarm"]:
+        raise AssertionError("expected four canonical orchestration, continuity, learning, and recovery skills")
     for skill_file in skills:
         validate_skill(skill_file.parent)
     skill_artifacts = sorted(path.relative_to(ROOT).as_posix() for path in (ROOT / "skills").rglob("SKILL*.md"))
-    expected_artifacts = [f"skills/{name}/SKILL.md" for name in ["conductor-swarm", "cross-tool-continuity-swarm", "pickup-swarm"]]
+    expected_artifacts = [f"skills/{name}/SKILL.md" for name in ["conductor-swarm", "cross-tool-continuity-swarm", "loop-improvement", "pickup-swarm"]]
     if skill_artifacts != expected_artifacts:
         raise AssertionError(f"duplicate or unexpected SKILL artifacts: {skill_artifacts}")
     validate_registration()
-    print("Validated three canonical skills plus Codex, Claude, marketplace, and publisher registration")
+    print("Validated four canonical skills plus Codex, Claude, marketplace, and publisher registration")
 
 
 if __name__ == "__main__":

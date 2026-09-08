@@ -27,3 +27,7 @@ Use the existing checkpoint as the continuity source. Emit small state changes a
 Finish when the requested outcome is accepted or no authorized useful path remains. Preserve evidence and exact next action. Do not create an unrequested scheduler, publish, switch providers, rewrite skills, or update global memory because a loop ended.
 
 When another process skill prescribes conflicting scheduling, resolve it through the runtime instruction hierarchy and the user's selected workflow. Use compatible bounded testing/review capabilities rather than silently running competing controllers. Project-specific correctness and authority requirements remain intact.
+
+## Enabled learning at milestones
+
+When the user enables project learning, `loop-improvement` retrieves scoped accepted lessons before matching work and captures compact outcomes at integration milestones. Skill Feedback Engine supplies sanitized proposals; the bundled improvement runtime adds command comparisons, attributed acceptance, expiry, retrieval, and retirement. Local lesson acceptance does not approve shared skill edits. Use fresh-agent trials before claiming model behavior improved; deterministic process fixtures prove persistence and gates only. Keep this work bounded so optional experiments do not block delivery.

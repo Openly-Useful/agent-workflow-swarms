@@ -22,6 +22,12 @@ Learn more at [Openly Useful](https://openlyuseful.org/#projects).
 
 It is quality-first, not “cheapest-model-first.” Token and latency savings come from progressive skill loading, bounded context, reusable checkpoints, and sensible routing—not from skipping review, tests, integration, or risk work.
 
+## Milestone learning (1.4.0)
+
+Opt in to project learning to capture meaningful milestone outcomes, evaluate proposed improvements, and retrieve current accepted lessons in later sessions. The fourth skill, `loop-improvement`, bundles a dependency-free Python runtime. It consumes sanitized [Skill Feedback Engine](https://github.com/Openly-Useful/skill-feedback-engine) proposal exports and adds experiment, acceptance, retrieval, expiry, and retirement records.
+
+Conductor remains the coordinator. Lesson state stays in the approved project at `.loop-improvement/`; keep it out of Git and portable handoffs. No scheduler, global installation, or automatic skill rewrite is enabled. [Runtime contracts](skills/loop-improvement/references.md) describe inputs and explicit write boundaries. Functional tests prove fresh-process persistence and comparison gates; they do not establish fresh-agent behavioral improvement.
+
 ## Included skills
 
 ### `conductor-swarm`
@@ -53,6 +59,14 @@ The portable continuity component used when work crosses tools or sessions:
 - enforces a 32 KiB transferable-context cap, rejects common local-only values, and makes evidence and synchronization idempotent;
 - renders a bounded text-block launch prompt and consumes an existing recovery receipt; it does not recursively run Pickup then Conductor on every invocation.
 
+### `loop-improvement`
+
+The optional project learning component:
+
+- imports sanitized improvement proposals and compares baseline/candidate outcomes with regression guards;
+- accepts evidence-bound lessons with finite expiry and retrieves them by task context;
+- retains retirement history without automatically changing shared skills or enabling background work.
+
 ## Model-agnostic by design
 
 Conductor Swarm never hard-codes vendor model names. It uses four portable profiles:
@@ -77,7 +91,7 @@ gh skill install Openly-Useful/agent-workflow-swarms --all --agent universal --s
 ### skills.sh-compatible CLI
 
 ```bash
-npx skills add Openly-Useful/agent-workflow-swarms --skill conductor-swarm pickup-swarm cross-tool-continuity-swarm
+npx skills add Openly-Useful/agent-workflow-swarms --skill conductor-swarm pickup-swarm cross-tool-continuity-swarm loop-improvement
 ```
 
 ### Codex skill installer
@@ -85,7 +99,7 @@ npx skills add Openly-Useful/agent-workflow-swarms --skill conductor-swarm picku
 Ask Codex:
 
 ```text
-Use $skill-installer to install all three skills from
+Use $skill-installer to install all four skills from
 https://github.com/Openly-Useful/agent-workflow-swarms/tree/main/skills
 ```
 
@@ -133,6 +147,7 @@ Validate canonical skill uniqueness, provider manifests, marketplace entries, pu
 
 ```sh
 python3 scripts/validate.py
+python3 scripts/test_loop.py
 ```
 
 ## Support and policies

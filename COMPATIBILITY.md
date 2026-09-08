@@ -28,3 +28,7 @@ portable checkpoint and standard-library CLI are host-neutral. Adapter details,
 model/profile labels, switching controls, tracker connectors, and permissions
 remain capability-gated by the receiving host; installation does not imply
 that a host can switch tools or models.
+
+## 1.4.0 local learning capability
+
+`loop-improvement` adds a fourth canonical skill with a bundled Python 3.9+ standard-library runtime. Repository validation covers both plugin discovery manifests and all four skill inventories. Local functional tests exercise fresh-process lesson retrieval, comparison gates, invalidation, and read-only status. The public install results above remain historical v1.1.1 evidence; 1.4.0 host installs, event hooks, and fresh-agent improvement are not claimed. Existing plugin IDs and MIT terms are preserved.
