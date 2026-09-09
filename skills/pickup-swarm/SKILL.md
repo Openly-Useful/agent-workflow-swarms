@@ -1,6 +1,6 @@
 ---
 name: pickup-swarm
-description: Use when a user asks to pick up where a prior session left off, discover and resume existing workflows, continue from a handoff, get a status TL;DR across projects, determine what remains, safely optimize in-flight work, or organize agents to finish outstanding work.
+description: Use when recovering interrupted work, resolving an uncertain handoff, or discovering explicitly requested outstanding workflows. Plain current-status queries use the existing status snapshot rather than a recovery audit.
 ---
 
 # Pickup Swarm
@@ -9,7 +9,7 @@ description: Use when a user asks to pick up where a prior session left off, dis
 
 Recover existing work for a parent orchestrator or direct user request. Reconstruct verified state, separate completion work from optional optimization, and prepare clean continuation briefs without assuming any particular model, agent framework, tracker, or vendor.
 
-When `conductor-swarm` is active, return the recovery ledger, work-stream definitions, optimization register, and continuation briefs to it for routing and execution.
+When `conductor-swarm` is active, supply one bounded recovery receipt and return control to it. Do not invoke another Conductor or repeat discovery that already has a valid receipt. This is the recovery entry to the shared delivery loop, not a loop to run before every task.
 
 ## Operating contract
 
@@ -25,7 +25,9 @@ When `conductor-swarm` is active, return the recovery ledger, work-stream defini
 
 ### 1. Auto-discover workflows
 
-Inventory available, in-scope sources:
+Begin with the named objective, designated checkpoint, active ownership, and relevant changed primary artifacts. Reuse evidence whose inputs, identity, and freshness still apply. Expand discovery only for a requested inventory, missing scope, or a contradiction the narrower checks cannot resolve. Do not require a full build merely to continue from a valid checkpoint.
+
+When broader discovery is needed, inventory available, in-scope sources:
 
 - conversation history, handoffs, saved plans, and status notes;
 - repositories, worktrees, branches, dirty changes, recent commits, and linked issues;
@@ -45,18 +47,18 @@ For every remaining stream, state binary acceptance criteria, artifacts, verific
 
 ### 3. Evaluate optimization safely
 
-Evaluate every stream for duplication, critical-path order, handoff quality, parallelism, tool use, test reliability, complexity, and resource usage.
+Triage opportunities that materially affect remaining delivery: duplication, critical-path order, handoff quality, parallelism, tool use, test reliability, complexity, and resource usage. Routine optimization triage should not delay ready required work; investigate optional optimization deeply only when requested or consequential to the objective.
 
 | Opportunity | Expected benefit | Regression risk | Proof required | Decision |
 |---|---|---|---|---|
 
-Classify each as **safe now**, **separate work stream**, **defer**, or **reject**. Preserve public behavior, data, and user changes unless the user explicitly authorizes otherwise. Apply only after capturing the current diff/state, passing baseline checks, and defining measurable proof. Make the smallest reversible change, isolate it from required recovery work, and run the same checks before and after. Revert or stop if behavior regresses, evidence is ambiguous, or the benefit is unproven.
+Classify each as **safe now**, **separate work stream**, **defer**, or **reject**. Preserve public behavior, data, and user changes unless the user explicitly authorizes otherwise. Apply only after capturing relevant current state and baseline checks and defining measurable proof. Make a small reversible change, isolate it from required recovery, and compare applicable checks. If it regresses, undo only the isolated current attempt when safe or stop that attempt; never revert existing user or concurrent changes.
 
 Keep speculative refactors, dependency upgrades, migrations, broad rewrites, and destructive cleanup separate from recovery work.
 
 ### 4. Prepare continuation briefs
 
-Create one brief per independent owner with:
+Produce a bounded recovery receipt: project/objective identity, source revision or relevant fingerprints, verified/claimed/unknown facts, ready work, blocking discrepancies, next integrated milestone, and checks needing refresh. Reuse the project's existing checkpoint rather than adding a competing ledger. Then create a brief per independent owner with:
 
 - workflow ID and verified last-good state;
 - goal, remaining intent, and binary definition of done;
@@ -69,7 +71,7 @@ Require every agent to validate the brief against current artifacts before editi
 
 ### 5. Execute or return to the parent
 
-If used directly and execution is authorized, work the critical path, checkpoint durable artifacts, integrate dependencies, and verify each criterion. If `conductor-swarm` is active, return structured recovery artifacts before execution so the parent can select skills, model profiles, and agent topology.
+If used directly and execution is authorized, action ready required work, using parallel independent lanes when supported and authorized, then integrate and verify. If `conductor-swarm` is already active, return the receipt once for its next ready-set decision. A blocked lane does not stop unrelated ready work. Finish recovery without starting unrelated optimization.
 
 ## Completion gate
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run deterministic behavioral-contract evals for the bundled skills."""
+"""Check static instruction contracts; this does not run agent behavior trials."""
 
 from __future__ import annotations
 
@@ -63,8 +63,8 @@ def main() -> None:
                 failures.append(f"{case_id}: forbidden behavior present {forbidden!r}")
 
     if failures:
-        raise AssertionError("Behavioral eval failures:\n- " + "\n- ".join(failures))
-    print(f"Passed {len(cases)} behavioral contract evals")
+        raise AssertionError("Static contract failures:\n- " + "\n- ".join(failures))
+    print(f"Passed {len(cases)} static instruction contract checks; agent behavior was not executed")
 
 
 if __name__ == "__main__":

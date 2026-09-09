@@ -70,13 +70,14 @@
   "component": {
     "name": "conductor-swarm",
     "displayName": "Conductor Swarm",
-    "version": "1.2.0",
+    "version": "1.4.0",
     "repository": "https://github.com/Openly-Useful/agent-workflow-swarms",
     "license": "MIT",
     "skillsPath": "./skills/",
     "skillNames": [
       "conductor-swarm",
       "cross-tool-continuity-swarm",
+      "loop-improvement",
       "pickup-swarm"
     ],
     "mcp": false
